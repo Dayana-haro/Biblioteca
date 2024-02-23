@@ -24,16 +24,14 @@ public class LibrosControlador {
     Connection conectado = (Connection) conectar.conectar();
     PreparedStatement ejecutar;
     ResultSet resultado;
-    private LibroReporte reporte;
 
     public LibrosControlador() {
     }
 
-    public LibrosControlador(LibroModelo libro, PreparedStatement ejecutar, ResultSet resultado, LibroReporte reporte) {
+    public LibrosControlador(LibroModelo libro, PreparedStatement ejecutar, ResultSet resultado) {
         this.libro = libro;
         this.ejecutar = ejecutar;
         this.resultado = resultado;
-        this.reporte = reporte;
     }
     
     

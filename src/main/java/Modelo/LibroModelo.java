@@ -125,4 +125,9 @@ public class LibroModelo {
     public void setEdicion(String edicion) {
         this.edicion = edicion;
     }
+    @Override
+    public String toString() {
+        return "Libro{" + "titulo=" + titulo + ", autor=" + autor + ", ISBN=" + isbn + ", paginas=" + paginas + ", edicion=" 
+                + edicion + ", editorial=" + editorial + ", lugar=" + lugar + ", fecha=" + fechadeedicion + '}';
+    }
 }

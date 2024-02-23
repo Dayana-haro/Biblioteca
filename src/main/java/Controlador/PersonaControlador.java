@@ -5,6 +5,7 @@
 package Controlador;
 
 import Modelo.PersonaModelo;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,7 +20,6 @@ import javax.swing.JOptionPane;
 public class PersonaControlador {
     private PersonaModelo persona;
     Conexion conectar = new Conexion();
-    Connection conectado = (Connection) conectar.conectar();
     PreparedStatement ejecutar;
     ResultSet resultado;
     private PesonaReporte person;
@@ -56,75 +56,15 @@ public class PersonaControlador {
 
     public void crearPersona(PersonaModelo p) {
         try {
-            String SQL = "call sp_CrearPersona('" + persona.getNombres() + "','" + persona.getApellidos() + "'," + persona.getCedula()
-                    + ",'" + persona.getUsuario() + "','" + persona.getClave() + "')";
-            ejecutar = (PreparedStatement) conectado.prepareCall(SQL);
-            int res = ejecutar.executeUpdate();
-            //executeUpdate cuando esxribo la base de datos
-            //int res cuando escribo
-            if (res > 0) {
-                JOptionPane.showMessageDialog(null, "Usuario creado");
-            } else {
-                JOptionPane.showMessageDialog(null, "Resvise la información ingresada");
-            }
-            ejecutar.close();
-        } catch (SQLException e) {
-            System.out.println("ERROR EN LA CONEXIÓN" + e);
+        try (Connection con = Conexion.getConnection();
+             CallableStatement cs = con.prepareCall("{CALL InsertarPersona(?, ?)}")) {
+            cs.setString(1,p.getCedula() );
+            cs.setString(2, p.getNombres());
+            cs.execute();
         }
+        JOptionPane.showMessageDialog(null, "Persona ingresada correctamente");
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al insertar persona: ");
     }
-
-    public ArrayList<Object[]> datosPersonas() {
-        ArrayList<Object[]> listaTotalRegistros = new ArrayList<>();
-        try {
-            String SQL = "call sp_listaPersona()";
-            ejecutar = (PreparedStatement) conectado.prepareCall(SQL);
-            resultado = ejecutar.executeQuery();
-            //executeQuery cuando consulto la base de datos
-            //ResultSet cuando recibo datos
-            int cont = 1;
-            while (resultado.next()) {
-
-                Object[] fila = new Object[6];
-                for (int i = 0; i < 6; i++) {
-                    fila[i] = resultado.getObject(i + 1);
-
-                }
-                fila[0] = cont;
-                cont++;
-                listaTotalRegistros.add(fila);
-            }
-            ejecutar.close();
-            return listaTotalRegistros;
-        } catch (Exception e) {
-            System.out.println("BDD" + e);
-        }
-        return null;
-    }
-
-    public ArrayList<Object[]> buscarPersona(int cedula) {
-        ArrayList<Object[]> listaTotalRegistros = new ArrayList<>();
-        try {
-            String sql = "call sp_BuscarPersona('" + cedula + "');";
-            ejecutar = (PreparedStatement) conectado.prepareCall(sql);
-            ResultSet resultado = ejecutar.executeQuery();
-            int cont = 1;
-            while (resultado.next()) {
-                Object[] fila = new Object[6];
-                for (int i = 0; i < 6; i++) {
-                    fila[i] = resultado.getObject(i + 1);
-                }
-                fila[0] = cont;
-                listaTotalRegistros.add(fila);
-                cont++;
-            }
-            ejecutar.close();
-            return listaTotalRegistros;
-
-        } catch (SQLException e) {
-            System.out.println("COMUNICARSE CON EL ADMINISTRADOR DEL SISTEMA");
-        }
-        return null;
-
-    }
-}
-
+   }
+  }

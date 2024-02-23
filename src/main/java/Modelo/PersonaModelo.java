@@ -25,8 +25,6 @@ public class PersonaModelo {
         this.clave = clave;
     }
 
-    
-
     public int getIdpersona() {
         return idpersona;
     }
@@ -77,7 +75,11 @@ public class PersonaModelo {
     }
     
     @Override
-    public String toString(){
-        return "DATOS PERSONALES";
+    public String toString() {
+        return "Persona{" +
+                "id=" + idpersona +
+                ", cedula='" + cedula + '\'' +
+                ", nombresCompletos='" + nombres + '\'' +
+                '}';
     }
 }
