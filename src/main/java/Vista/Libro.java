@@ -110,6 +110,11 @@ ArrayList<LibroModelo> listaLibroModelo= new ArrayList<>();
         txtBuscar.setText("Buscar");
 
         bttEliminar.setText("Eliminar");
+        bttEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bttEliminarActionPerformed(evt);
+            }
+        });
 
         bttLimpiar.setText("Limpiar");
 
@@ -212,12 +217,13 @@ ArrayList<LibroModelo> listaLibroModelo= new ArrayList<>();
                             .addComponent(jLabel5)
                             .addComponent(txtPaginas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bttLimpiar)
-                        .addGap(2, 2, 2)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(TxtEdicion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(bttLimpiar)
+                                .addGap(5, 5, 5)
+                                .addComponent(jLabel6))
+                            .addComponent(TxtEdicion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtFechaE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10))
@@ -285,6 +291,11 @@ ArrayList<LibroModelo> listaLibroModelo= new ArrayList<>();
         LibrosControlador pc=new LibrosControlador();
         pc.crearLibros(pM);                                       
     }//GEN-LAST:event_TxtAgregarActionPerformed
+
+    private void bttEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bttEliminarActionPerformed
+        // TODO add your handling code here:
+        TablaLibros.remove(WIDTH);
+    }//GEN-LAST:event_bttEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
